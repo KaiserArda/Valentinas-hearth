@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Desmos Kalp Dönüşümü</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #111; /* Koyu Mod */
+            overflow: hidden;
+        }
+        canvas {
+            box-shadow: 0 0 30px rgba(220, 20, 60, 0.3);
+            border-radius: 10px;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="kalpCanvas"></canvas>
+
+<script>
+    const canvas = document.getElementById("kalpCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Tam ekran veya sabit boyut
+    canvas.width = 600;
+    canvas.height = 600;
+
+    const width = canvas.width;
+    const height = canvas.height;
+    const scale = 120; // Kalbin büyüklüğü
+
+    // Animasyon Ayarları
+    const maxA = 25; // Kalbin ne kadar "dolacağını" belirler (Sıklık)
+    const duration = 10000; // Döngü süresi (10 saniye)
+
+    function drawGrid() {
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        // Basit ızgara
+        for(let i=0; i<=width; i+=50) { ctx.moveTo(i,0); ctx.lineTo(i,height); }
+        for(let i=0; i<=height; i+=50) { ctx.moveTo(0,i); ctx.lineTo(width,i); }
+        ctx.stroke();
+
+        // Eksenler
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(width/2, 0); ctx.lineTo(width/2, height);
+        ctx.moveTo(0, height/2); ctx.lineTo(width, height/2);
+        ctx.stroke();
+    }
+
+    function animate() {
+        // Zamanı al ve 0 ile 1 arasında giden bir döngü oluştur
+        let time = Date.now() % duration;
+        let progress = time / duration;
+
+        // "a" değeri 0'dan maxA'ya çıkar, sonra tekrar 0'a iner (Pin-pong etkisi)
+        // Math.sin(progress * Math.PI) -> 0'dan başlar, 1'e çıkar, 0'a iner.
+        let a = Math.sin(progress * Math.PI) * maxA;
+
+        ctx.clearRect(0, 0, width, height);
+        drawGrid();
+
+        ctx.beginPath();
+        ctx.strokeStyle = "#ff3366"; // Kalp Rengi
+        ctx.lineWidth = 2;
+
+        let first = true;
+
+        // Formülün tanım aralığı: -sqrt(5) ile +sqrt(5) arası (yaklaşık -2.23 ile 2.23)
+        // Adım aralığını (0.003) küçük tuttum ki çizgiler pürüzsüz olsun
+        for (let x = -2.236; x <= 2.236; x += 0.003) {
+            
+            // FORMÜL: x^(2/3) + sqrt(5 - x^2) * sin(a * pi * x)
+            let term1 = Math.cbrt(x * x); 
+            let term2 = Math.sqrt(5 - x * x) * Math.sin(a * Math.PI * x);
+            let y = term1 + term2;
+
+            if (isNaN(y)) continue;
+
+            // Koordinatları ekrana uyarla
+            let plotX = width / 2 + (x * scale);
+            let plotY = height / 2 - (y * scale); // Canvas'ta Y ters işler
+
+            if (first) {
+                ctx.moveTo(plotX, plotY);
+                first = false;
+            } else {
+                ctx.lineTo(plotX, plotY);
+            }
+        }
+        ctx.stroke();
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+
+</body>
+</html>
