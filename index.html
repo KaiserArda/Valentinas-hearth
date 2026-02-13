@@ -18,12 +18,48 @@
             border-radius: 10px;
             background-color: #000;
         }
-      
+      .layout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+}
+
+.side {
+    width: 250px;
+    color: white;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.left {
+    text-align: right;
+}
+
+.right {
+    text-align: left;
+}
+
     </style>
 </head>
 <body>
 
+    <div class="layout">
+
+    <div class="side left">
+        <h1>MESAJ 1</h1>
+        <p>Buraya istediğin yazıyı yazabilirsin.</p>
+    </div>
+
     <canvas id="kalpCanvas"></canvas>
+
+    <div class="side right">
+        <h1>MESAJ 2</h1>
+        <p>Burayı da kullanabilirsin.</p>
+    </div>
+
+</div>
+
 
 
 <script>
