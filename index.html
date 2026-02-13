@@ -65,6 +65,9 @@
     </style>
 </head>
 <body>
+<audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
     <div class="layout">
 
@@ -164,6 +167,12 @@
 
         requestAnimationFrame(animate);
     }
+// Müzik başlat
+window.addEventListener("load", () => {
+    const music = document.getElementById("bg-music");
+    music.volume = 0.5; // sesi yarıya düşürdüm
+    music.play().catch(() => {});
+});
 
     animate();
 </script>
