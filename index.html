@@ -11,7 +11,6 @@
             justify-content: center;
             align-items: center;
             background-color: #111; /* Koyu Mod */
-            overflow: hidden;
         }
         canvas {
             box-shadow: 0 0 30px rgba(220, 20, 60, 0.3);
@@ -29,7 +28,8 @@
 
 
 .side {
-    width: 250px;
+    width: 40vw;        /* ekranın %40’ı */
+    max-width: 700px;   /* aşırı büyümesin */
     color: white;
     padding: 20px;
     font-family: Arial, sans-serif;
@@ -39,6 +39,11 @@
     align-items: center;   /* yatay ortalama */
     text-align: center;    /* metin ortalama */
 }
+.side p {
+    text-align: left;
+    line-height: 1.6;
+}
+
 .side h2 {
     margin-top: 0;
     font-size: 32px;
