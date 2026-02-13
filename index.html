@@ -18,11 +18,43 @@
             border-radius: 10px;
             background-color: #000;
         }
+        .wrapper {
+    position: relative;
+}
+
+.top-text, .bottom-text {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ff3366;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 0 0 15px rgba(255, 51, 102, 0.7);
+    font-family: Arial, sans-serif;
+}
+
+.top-text {
+    top: 40px;
+}
+
+.bottom-text {
+    bottom: 40px;
+}
+
     </style>
 </head>
 <body>
 
-<canvas id="kalpCanvas"></canvas>
+<div class="wrapper">
+
+    <div class="top-text">SENİN İÇİN ATIYOR</div>
+
+    <canvas id="kalpCanvas"></canvas>
+
+    <div class="bottom-text">∞</div>
+
+</div>
+
 
 <script>
     const canvas = document.getElementById("kalpCanvas");
